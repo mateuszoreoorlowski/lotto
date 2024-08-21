@@ -1,0 +1,13 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://admin:admin@localhost:27018/lotto
+      auto-index-creation: true
+
+winning:
+  number:
+    scheduler: 5 * * * * *
+
+result:
+  checker:
+    scheduler: 0 0 12 * * 6
