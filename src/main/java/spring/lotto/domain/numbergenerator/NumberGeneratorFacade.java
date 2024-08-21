@@ -1,7 +1,7 @@
 package spring.lotto.domain.numbergenerator;
 
 import spring.lotto.domain.numbergenerator.dto.WinningNumbersDto;
-//import spring.lotto.domain.numberreceiver.NumberReceiverFacade;
+import spring.lotto.domain.numberreceiver.NumberReceiverFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,26 +10,26 @@ import java.util.Set;
 
 @AllArgsConstructor
 @Component
-public class NumberGenaratorFacade {
+public class NumberGeneratorFacade {
 
     private final RandomNumberGenerable winningNumberGenerator;
     private final WinningNumberValidator winningNumberValidator;
     private final WinningNumbersRepository winningNumbersRepository;
-//    private final NumberReceiverFacade numberReceiverFacade;
+    private final NumberReceiverFacade numberReceiverFacade;
 
 
     public WinningNumbersDto generateWinningNumbers() {
-//        LocalDateTime nextDrawDate = numberReceiverFacade.retrieveNextDrawDate();
+        LocalDateTime nextDrawDate = numberReceiverFacade.retrieveNextDrawDate();
         Set<Integer> winningNumbers = winningNumberGenerator.genereteSixRandomNumbers();
         winningNumberValidator.validate(winningNumbers);
         WinningNumbers build = WinningNumbers.builder()
                 .winningNumbers(winningNumbers)
-//                .date(nextDrawDate)
+                .date(nextDrawDate)
                 .build();
         winningNumbersRepository.save(build);
         return WinningNumbersDto.builder()
                 .winningNumbers(winningNumbers)
-//                .date(nextDrawDate)
+                .date(nextDrawDate)
                 .build();
     }
 
@@ -41,8 +41,8 @@ public class NumberGenaratorFacade {
                 .build();
     }
 
-//    public boolean areWinningNumbersGeneratedByDate() {
-//        LocalDateTime nextDrawDate = numberReceiverFacade.retrieveNextDrawDate();
-//        return winningNumbersRepository.existsByDate(nextDrawDate);
-//    }
+    public boolean areWinningNumbersGeneratedByDate() {
+        LocalDateTime nextDrawDate = numberReceiverFacade.retrieveNextDrawDate();
+        return winningNumbersRepository.existsByDate(nextDrawDate);
+    }
 }
